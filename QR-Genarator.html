@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>QR generator</title>
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+                background-color: rgb(52, 51, 54);
+                width: 100%;
+                height: 100vh;
+                font-family: 'Poppins',sans-serif;
+            }
+            .qrbox{
+                background: white;
+                width: 25%;
+                top: 50%;
+                left: 50%;
+                padding: 25px 30px;
+                border-radius: 10px;
+                position: absolute;
+                transform: translate(-50%,-50%);
+            }
+            .qrbox h2{
+                text-align: center;
+                margin-top: 10px;
+                color: rgb(57, 57, 231);
+                font-size: 28px;
+            }
+            .qrbox input{
+                outline: none;
+                border: 2.5px solid rgb(57, 57, 231);
+                border-radius: 20px;
+                width: 90%;
+                height: 30px;
+                padding: 10px ;
+                margin: 30px 30px 30px 0;
+                font-size:15px;
+            }
+            .qrbox button{
+                outline: none;
+                border: none;
+                background-color:rgb(57, 57, 231) ;
+                color: white;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+                border-radius: 20px;
+                margin-top: 30px;
+                width: 96%;
+                height: 40px;
+                cursor: pointer;
+                margin: 30px 0;
+                font-size: 17px;
+                font-weight: 550;
+            }
+           .qrbox button:hover{
+            width: 99%;
+            height: 50px;
+           }
+            .imgb{
+                width: 200px;
+                border-radius: 40px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 1s;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left:20px;
+            }
+            .imgb img{
+                width:100%;
+                justify-content: center;
+                align-items: center;
+                padding:20px 25px;
+            }
+            .imgb.show-img{
+                max-height: 400px;
+                margin: 5px;
+                border: 1.5px solid rgb(203, 199, 199);
+                justify-content: center;
+                align-items: center;
+                margin-left: 85px;
+            }
+            .error{
+                animation: shake 0.1s linear 5;
+            }
+            @keyframes shake {
+                0%{
+                    transform: translateX(0);
+                }
+                25%{
+                    transform: translateX(-3px);
+                }
+                50%{
+                    transform: translateX(0);
+                }
+                75%{
+                    transform: translateX(3px);
+                }
+                100%{
+                    transform: translateX(0);
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+<div class="qrbox">
+<h2>QR-Generator</h2>
+<input type="text" id="inputvalue" placeholder="Enter URL or Name"><br>
+
+<div class="imgb" id="imgbox">
+    <img src="" id="qrimg">
+</div>
+<button onclick="generateqr()">Generate-QR</button>
+</div>
+
+<script>
+    let qrText=document.getElementById("inputvalue")
+    let imgBox=document.getElementById("imgbox")
+    let qrImg=document.getElementById("qrimg")
+    function generateqr(){
+        if(qrText.value.length > 0){
+            qrImg.src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value
+            imgBox.classList.add("show-img")
+        }
+        else{
+            if(qrText.value.length <= 0){
+                qrImg.src=" "
+                imgBox.classList.remove()
+                alert("Please Enter a name and then click !")
+                qrText.classList.add("error")
+                    setTimeout(()=>{
+                        qrText.classList.add('error')
+                    },1000)
+            }
+           
+                     
+        }
+    }
+</script>
+    </body>
+</html>
